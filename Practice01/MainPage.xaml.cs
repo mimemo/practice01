@@ -25,6 +25,8 @@ namespace Practice01
         public MainPage()
         {
             this.InitializeComponent();
+
+            this.repeater2.ItemsSource = Enumerable.Range(0, 500);
         }
     }
 }

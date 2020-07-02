@@ -2,13 +2,71 @@
     x:Class="Practice01.MainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:Practice01"
+    xmlns:common="using:Practice01.Common"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:Practice01"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+
+        <!--  The Layout specifications used:  -->
+
+
+        <common:ActivityFeedLayout
+            x:Key="MyFeedLayout"
+            ColumnSpacing="12"
+            MinItemSize="80, 108"
+            RowSpacing="12" />
+
+        <local:MyDataTemplateSelector
+            x:Key="MyDataTemplateSelector"
+            Accent="{StaticResource AccentItemTemplate}"
+            Normal="{StaticResource NormalItemTemplate}" />
+
+        <DataTemplate x:Key="NormalItemTemplate" x:DataType="x:Int32">
+            <Button
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                Background="{ThemeResource SystemChromeLowColor}">
+                <TextBlock Text="{x:Bind}" />
+            </Button>
+        </DataTemplate>
+
+        <DataTemplate x:Key="AccentItemTemplate" x:DataType="x:Int32">
+            <Button
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                Background="{ThemeResource SystemAccentColor}">
+                <TextBlock Text="{x:Bind}" />
+            </Button>
+        </DataTemplate>
+
+
+    </Page.Resources>
+
+
 
     <Grid>
+        <muxc:ItemsRepeaterScrollHost>
+            <ScrollViewer
+                x:Name="scrollViewer"
+                Height="400"
+                Padding="0,0,16,0"
+                IsVerticalScrollChainingEnabled="False">
+
+                <muxc:ItemsRepeater
+                    x:Name="repeater2"
+                    Margin="0,0,12,0"
+                    HorizontalAlignment="Stretch"
+                    ItemTemplate="{StaticResource MyDataTemplateSelector}"
+                    Layout="{StaticResource MyFeedLayout}" />
+            </ScrollViewer>
+        </muxc:ItemsRepeaterScrollHost>
+
+
 
     </Grid>
 </Page>
