@@ -133,6 +133,7 @@ namespace Practice01.Common
             // Determine which rows need to be realized.  We know every row will have the same height and 
             // only contain 3 items.  Use that to determine the index for the first and last item that 
             // will be within that realization rect.
+
             var firstRowIndex = Math.Max(
                 (int)(context.RealizationRect.Y / (this.MinItemSize.Height + this.RowSpacing)) - 1,
                 0);
@@ -145,11 +146,10 @@ namespace Practice01.Common
             state.LayoutRects.Clear();
 
             // Save the index of the first realized item.  We'll use it as a starting point during arrange.
-            state.FirstRealizedIndex = firstRowIndex * 3;
+            state.FirstRealizedIndex = firstRowIndex * 2;
 
             // ideal item width that will expand/shrink to fill available space
-            double desiredItemWidth = Math.Max(this.MinItemSize.Width, (availableSize.Width - this.ColumnSpacing * 3) / 4);
-            desiredItemWidth = 100;
+            double desiredItemWidth = Math.Max(this.MinItemSize.Width, (availableSize.Width - this.ColumnSpacing * 1) / 2);
             // Foreach item between the first and last index, 
             //     Call GetElementOrCreateElementAt which causes an element to either be realized or retrieved 
             //       from a recycle pool
@@ -165,13 +165,13 @@ namespace Practice01.Common
             // context.RecycleElement(element).
             for(int rowIndex = firstRowIndex; rowIndex < lastRowIndex; rowIndex++)
             {
-                int firstItemIndex = rowIndex * 3;
+                int firstItemIndex = rowIndex * 2;
                 var boundsForCurrentRow = this.CalculateLayoutBoundsForRow(rowIndex, desiredItemWidth);
 
-                for(int columnIndex = 0; columnIndex < 3; columnIndex++)
+                for(int columnIndex = 0; columnIndex < 2; columnIndex++)
                 {
                     var index = firstItemIndex + columnIndex;
-                    var rect = boundsForCurrentRow[index % 3];
+                    var rect = boundsForCurrentRow[index % 2];
                     var container = context.GetOrCreateElementAt(index);
 
                     container.Measure(
@@ -189,7 +189,7 @@ namespace Practice01.Common
 
 
             // Report this as the desired size for the layout
-            return new Size(desiredItemWidth * 4 + this.ColumnSpacing * 2, extentHeight);
+            return new Size(desiredItemWidth * 2 + this.ColumnSpacing * 1, extentHeight);
         }
 
         protected override Size ArrangeOverride(VirtualizingLayoutContext context, Size finalSize)
@@ -214,35 +214,30 @@ namespace Practice01.Common
 
         private Rect[] CalculateLayoutBoundsForRow(int rowIndex, double desiredItemWidth)
         {
-            var boundsForRow = new Rect[3];
+            var boundsForRow = new Rect[2];
 
             var yoffset = rowIndex * (this.MinItemSize.Height + this.RowSpacing);
-            boundsForRow[0].Y = boundsForRow[1].Y = boundsForRow[2].Y = yoffset;
-            boundsForRow[0].Height = boundsForRow[1].Height = boundsForRow[2].Height = this.MinItemSize.Height;
+            boundsForRow[0].Y = boundsForRow[1].Y =  yoffset;
+            boundsForRow[0].Height = boundsForRow[1].Height =  this.MinItemSize.Height;
 
-            if(rowIndex % 2 == 0)
+            if( rowIndex % 2 == 0)
             {
                 // Left tile (narrow)
                 boundsForRow[0].X = 0;
-                boundsForRow[0].Width = desiredItemWidth;
+                boundsForRow[0].Width = desiredItemWidth * 1.5;
                 // Middle tile (narrow)
                 boundsForRow[1].X = boundsForRow[0].Right + this.ColumnSpacing;
-                boundsForRow[1].Width = desiredItemWidth;
-                // Right tile (wide)
-                boundsForRow[2].X = boundsForRow[1].Right + this.ColumnSpacing;
-                boundsForRow[2].Width = desiredItemWidth * 2 + this.ColumnSpacing;
+                boundsForRow[1].Width = desiredItemWidth * 0.5;
             }
             else
             {
                 // Left tile (wide)
                 boundsForRow[0].X = 0;
-                boundsForRow[0].Width = (desiredItemWidth * 2 + this.ColumnSpacing);
+                boundsForRow[0].Width = desiredItemWidth * 0.5;
+
                 // Middle tile (narrow)
                 boundsForRow[1].X = boundsForRow[0].Right + this.ColumnSpacing;
-                boundsForRow[1].Width = desiredItemWidth;
-                // Right tile (narrow)
-                boundsForRow[2].X = boundsForRow[1].Right + this.ColumnSpacing;
-                boundsForRow[2].Width = desiredItemWidth;
+                boundsForRow[1].Width = desiredItemWidth * 1.5;
             }
 
             return boundsForRow;

@@ -50,7 +50,28 @@
 
 
     <Grid>
-        <muxc:ItemsRepeaterScrollHost>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <Pivot Title="EMAIL">
+            <PivotItem Header="All">
+                <TextBlock Text="all emails go here." />
+            </PivotItem>
+            <PivotItem Header="Unread">
+                <TextBlock Text="unread emails go here." />
+            </PivotItem>
+            <PivotItem Header="Flagged">
+                <TextBlock Text="flagged emails go here." />
+            </PivotItem>
+            <PivotItem Header="Urgent">
+                <TextBlock Text="urgent emails go here." />
+            </PivotItem>
+        </Pivot>
+
+        <muxc:ItemsRepeaterScrollHost Grid.Row="1">
             <ScrollViewer
                 x:Name="scrollViewer"
                 Height="400"
