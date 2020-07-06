@@ -41,34 +41,39 @@
         <Grid Grid.Row="1">
 
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto" />
-                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="2*" />
                 <ColumnDefinition Width="auto" />
             </Grid.ColumnDefinitions>
-            <controls:BladeItem
-                Width="auto"
-                IsOpen="True"
-                TitleBarVisibility="Visible">
 
-                <!--  BladeItem content  -->
-                <controls:BladeItem.Content>
-                    <Rectangle Fill="Green" />
+            <Grid Background="AliceBlue" />
+            <Grid Grid.Column="1" Background="LightCyan" />
 
-                </controls:BladeItem.Content>
+            <controls:BladeView Grid.Column="2">
+                <controls:BladeItem
+                    Width="800"
+                    Header="hoge"
+                    IsOpen="True">
 
-                <controls:BladeItem.ContentOverlay>
-                    <Rectangle Fill="Red" />
-                </controls:BladeItem.ContentOverlay>
-            </controls:BladeItem>
+                    <!--  BladeItem content  -->
+                    <controls:BladeItem.Content>
+                        <Rectangle Width="600" Fill="Green" />
 
-            <controls:BladeItem
-                x:Name="DefaultBlade2"
-                Grid.Column="1"
-                Width="500"
-                Header="A blade"
-                IsOpen="True">
-                <!--  BladeItem content  -->
-            </controls:BladeItem>
+                    </controls:BladeItem.Content>
+
+                    <controls:BladeItem.ContentOverlay>
+                        <Rectangle Fill="Red" />
+                    </controls:BladeItem.ContentOverlay>
+                </controls:BladeItem>
+
+                <controls:BladeItem
+                    x:Name="DefaultBlade2"
+                    Width="500"
+                    Header="A blade"
+                    IsOpen="True">
+                    <!--  BladeItem content  -->
+                </controls:BladeItem>
+            </controls:BladeView>
         </Grid>
 
     </Grid>
