@@ -2,17 +2,75 @@
     x:Class="Practice03prototype.Views.MainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Style="{StaticResource PageStyle}"
     mc:Ignorable="d">
     <Grid x:Name="ContentArea" Margin="{StaticResource MediumLeftRightMargin}">
-        <Grid
-            Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}">
-            <!--
-                The SystemControlPageBackgroundChromeLowBrush background represents where you should place your content. 
-                Place your content here.
-            -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="1*" />
+        </Grid.RowDefinitions>
+
+        <CommandBar>
+
+            <CommandBar.Content>
+                <TextBlock Margin="12,14" Text="Now playing..." />
+            </CommandBar.Content>
+
+            <AppBarToggleButton Icon="Shuffle" Label="Shuffle" />
+            <AppBarToggleButton Icon="RepeatAll" Label="Repeat" />
+            <AppBarSeparator />
+            <AppBarButton Icon="Back" Label="Back" />
+            <AppBarButton Icon="Stop" Label="Stop" />
+            <AppBarButton Icon="Play" Label="Play" />
+            <AppBarButton Icon="Forward" Label="Forward" />
+
+            <CommandBar.SecondaryCommands>
+                <AppBarButton Label="Like" />
+                <AppBarButton Label="Dislike" />
+            </CommandBar.SecondaryCommands>
+
+
+
+
+        </CommandBar>
+        <Grid Grid.Row="1" Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="auto" />
+            </Grid.ColumnDefinitions>
+
+            <Grid Background="AliceBlue" />
+            <Grid Grid.Column="1" Background="LightCyan" />
+
+            <controls:BladeView Grid.Column="2">
+                <controls:BladeItem
+                    Width="300"
+                    Header="hoge"
+                    IsOpen="True">
+
+                    <!--  BladeItem content  -->
+                    <controls:BladeItem.Content>
+                        <Rectangle Width="600" Fill="Green" />
+
+                    </controls:BladeItem.Content>
+
+                    <controls:BladeItem.ContentOverlay>
+                        <Rectangle Fill="Red" />
+                    </controls:BladeItem.ContentOverlay>
+                </controls:BladeItem>
+
+                <controls:BladeItem
+                    x:Name="DefaultBlade2"
+                    Width="300"
+                    Header="A blade"
+                    IsOpen="True">
+                    <!--  BladeItem content  -->
+                </controls:BladeItem>
+            </controls:BladeView>
         </Grid>
     </Grid>
 </Page>
