@@ -2,9 +2,11 @@
     x:Class="Practice03prototype.Views.MainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:common="using:Practice03prototype.Common"
     xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     Style="{StaticResource PageStyle}"
     mc:Ignorable="d">
     <Grid>
@@ -46,7 +48,38 @@
             </Grid.ColumnDefinitions>
 
             <Grid Background="AliceBlue" />
-            <Grid Grid.Column="1" Background="LightCyan" />
+
+            <muxc:ItemsRepeaterScrollHost Grid.Column="1">
+                <ScrollViewer x:Name="scrollViewer" IsVerticalScrollChainingEnabled="False">
+
+                    <muxc:ItemsRepeater x:Name="repeater2" HorizontalAlignment="Stretch">
+
+                        <muxc:ItemsRepeater.Layout>
+                            <common:ActivityFeedLayout />
+                        </muxc:ItemsRepeater.Layout>
+
+
+                        <muxc:ItemsRepeater.ItemTemplate>
+
+
+
+                            <DataTemplate x:DataType="x:Int32">
+                                <Button
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Stretch"
+                                    Background="{ThemeResource SystemChromeLowColor}">
+                                    <TextBlock Text="{x:Bind}" />
+                                </Button>
+                            </DataTemplate>
+
+
+                        </muxc:ItemsRepeater.ItemTemplate>
+
+                    </muxc:ItemsRepeater>
+                </ScrollViewer>
+            </muxc:ItemsRepeaterScrollHost>
+
+
 
 
             <controls:BladeItem

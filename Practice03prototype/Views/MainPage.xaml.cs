@@ -1,5 +1,5 @@
 ﻿using System;
-
+using System.Linq;
 using Practice03prototype.ViewModels;
 
 using Windows.UI.Xaml.Controls;
@@ -14,6 +14,8 @@ namespace Practice03prototype.Views
         {
 
             this.InitializeComponent();
+
+            this.repeater2.ItemsSource = Enumerable.Range(0, 500);
         }
 
 
