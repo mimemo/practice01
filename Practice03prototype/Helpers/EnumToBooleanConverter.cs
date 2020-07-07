@@ -12,12 +12,12 @@ namespace Practice03prototype.Helpers
         {
             if (parameter is string enumString)
             {
-                if (!Enum.IsDefined(EnumType, value))
+                if (!Enum.IsDefined(this.EnumType, value))
                 {
                     throw new ArgumentException("ExceptionEnumToBooleanConverterValueMustBeAnEnum".GetLocalized());
                 }
 
-                var enumValue = Enum.Parse(EnumType, enumString);
+                var enumValue = Enum.Parse(this.EnumType, enumString);
 
                 return enumValue.Equals(value);
             }
@@ -29,7 +29,7 @@ namespace Practice03prototype.Helpers
         {
             if (parameter is string enumString)
             {
-                return Enum.Parse(EnumType, enumString);
+                return Enum.Parse(this.EnumType, enumString);
             }
 
             throw new ArgumentException("ExceptionEnumToBooleanConverterParameterMustBeAnEnumName".GetLocalized());

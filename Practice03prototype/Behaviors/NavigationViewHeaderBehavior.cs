@@ -19,8 +19,8 @@ namespace Practice03prototype.Behaviors
 
         public object DefaultHeader
         {
-            get { return GetValue(DefaultHeaderProperty); }
-            set { SetValue(DefaultHeaderProperty, value); }
+            get { return this.GetValue(DefaultHeaderProperty); }
+            set { this.SetValue(DefaultHeaderProperty, value); }
         }
 
         public static readonly DependencyProperty DefaultHeaderProperty = DependencyProperty.Register("DefaultHeader", typeof(object), typeof(NavigationViewHeaderBehavior), new PropertyMetadata(null, (d, e) => _current.UpdateHeader()));
@@ -68,13 +68,13 @@ namespace Practice03prototype.Behaviors
         {
             base.OnAttached();
             _current = this;
-            NavigationService.Navigated += OnNavigated;
+            NavigationService.Navigated += this.OnNavigated;
         }
 
         protected override void OnDetaching()
         {
             base.OnDetaching();
-            NavigationService.Navigated -= OnNavigated;
+            NavigationService.Navigated -= this.OnNavigated;
         }
 
         private void OnNavigated(object sender, NavigationEventArgs e)
@@ -82,42 +82,42 @@ namespace Practice03prototype.Behaviors
             var frame = sender as Frame;
             if (frame.Content is Page page)
             {
-                _currentPage = page;
+                this._currentPage = page;
 
-                UpdateHeader();
-                UpdateHeaderTemplate();
+                this.UpdateHeader();
+                this.UpdateHeaderTemplate();
             }
         }
 
         private void UpdateHeader()
         {
-            if (_currentPage != null)
+            if (this._currentPage != null)
             {
-                var headerMode = GetHeaderMode(_currentPage);
+                var headerMode = GetHeaderMode(this._currentPage);
                 if (headerMode == NavigationViewHeaderMode.Never)
                 {
-                    AssociatedObject.Header = null;
-                    AssociatedObject.AlwaysShowHeader = false;
+                    this.AssociatedObject.Header = null;
+                    this.AssociatedObject.AlwaysShowHeader = false;
                 }
                 else
                 {
-                    var headerFromPage = GetHeaderContext(_currentPage);
+                    var headerFromPage = GetHeaderContext(this._currentPage);
                     if (headerFromPage != null)
                     {
-                        AssociatedObject.Header = headerFromPage;
+                        this.AssociatedObject.Header = headerFromPage;
                     }
                     else
                     {
-                        AssociatedObject.Header = DefaultHeader;
+                        this.AssociatedObject.Header = this.DefaultHeader;
                     }
 
                     if (headerMode == NavigationViewHeaderMode.Always)
                     {
-                        AssociatedObject.AlwaysShowHeader = true;
+                        this.AssociatedObject.AlwaysShowHeader = true;
                     }
                     else
                     {
-                        AssociatedObject.AlwaysShowHeader = false;
+                        this.AssociatedObject.AlwaysShowHeader = false;
                     }
                 }
             }
@@ -125,10 +125,10 @@ namespace Practice03prototype.Behaviors
 
         private void UpdateHeaderTemplate()
         {
-            if (_currentPage != null)
+            if (this._currentPage != null)
             {
-                var headerTemplate = GetHeaderTemplate(_currentPage);
-                AssociatedObject.HeaderTemplate = headerTemplate ?? DefaultHeaderTemplate;
+                var headerTemplate = GetHeaderTemplate(this._currentPage);
+                this.AssociatedObject.HeaderTemplate = headerTemplate ?? this.DefaultHeaderTemplate;
             }
         }
     }

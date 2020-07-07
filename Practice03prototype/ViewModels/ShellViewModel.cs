@@ -31,19 +31,19 @@ namespace Practice03prototype.ViewModels
 
         public bool IsBackEnabled
         {
-            get { return _isBackEnabled; }
-            set { Set(ref _isBackEnabled, value); }
+            get { return this._isBackEnabled; }
+            set { this.Set(ref this._isBackEnabled, value); }
         }
 
         public WinUI.NavigationViewItem Selected
         {
-            get { return _selected; }
-            set { Set(ref _selected, value); }
+            get { return this._selected; }
+            set { this.Set(ref this._selected, value); }
         }
 
-        public ICommand LoadedCommand => _loadedCommand ?? (_loadedCommand = new RelayCommand(OnLoaded));
+        public ICommand LoadedCommand => this._loadedCommand ?? (this._loadedCommand = new RelayCommand(this.OnLoaded));
 
-        public ICommand ItemInvokedCommand => _itemInvokedCommand ?? (_itemInvokedCommand = new RelayCommand<WinUI.NavigationViewItemInvokedEventArgs>(OnItemInvoked));
+        public ICommand ItemInvokedCommand => this._itemInvokedCommand ?? (this._itemInvokedCommand = new RelayCommand<WinUI.NavigationViewItemInvokedEventArgs>(this.OnItemInvoked));
 
         public ShellViewModel()
         {
@@ -51,20 +51,20 @@ namespace Practice03prototype.ViewModels
 
         public void Initialize(Frame frame, WinUI.NavigationView navigationView, IList<KeyboardAccelerator> keyboardAccelerators)
         {
-            _navigationView = navigationView;
-            _keyboardAccelerators = keyboardAccelerators;
+            this._navigationView = navigationView;
+            this._keyboardAccelerators = keyboardAccelerators;
             NavigationService.Frame = frame;
-            NavigationService.NavigationFailed += Frame_NavigationFailed;
-            NavigationService.Navigated += Frame_Navigated;
-            _navigationView.BackRequested += OnBackRequested;
+            NavigationService.NavigationFailed += this.Frame_NavigationFailed;
+            NavigationService.Navigated += this.Frame_Navigated;
+            this._navigationView.BackRequested += this.OnBackRequested;
         }
 
         private async void OnLoaded()
         {
             // Keyboard accelerators are added here to avoid showing 'Alt + left' tooltip on the page.
             // More info on tracking issue https://github.com/Microsoft/microsoft-ui-xaml/issues/8
-            _keyboardAccelerators.Add(_altLeftKeyboardAccelerator);
-            _keyboardAccelerators.Add(_backKeyboardAccelerator);
+            this._keyboardAccelerators.Add(this._altLeftKeyboardAccelerator);
+            this._keyboardAccelerators.Add(this._backKeyboardAccelerator);
             await Task.CompletedTask;
         }
 
@@ -76,7 +76,7 @@ namespace Practice03prototype.ViewModels
                 return;
             }
 
-            var item = _navigationView.MenuItems
+            var item = this._navigationView.MenuItems
                             .OfType<WinUI.NavigationViewItem>()
                             .First(menuItem => (string)menuItem.Content == (string)args.InvokedItem);
             var pageType = item.GetValue(NavHelper.NavigateToProperty) as Type;
@@ -95,16 +95,16 @@ namespace Practice03prototype.ViewModels
 
         private void Frame_Navigated(object sender, NavigationEventArgs e)
         {
-            IsBackEnabled = NavigationService.CanGoBack;
+            this.IsBackEnabled = NavigationService.CanGoBack;
             if (e.SourcePageType == typeof(SettingsPage))
             {
-                Selected = _navigationView.SettingsItem as WinUI.NavigationViewItem;
+                this.Selected = this._navigationView.SettingsItem as WinUI.NavigationViewItem;
                 return;
             }
 
-            Selected = _navigationView.MenuItems
+            this.Selected = this._navigationView.MenuItems
                             .OfType<WinUI.NavigationViewItem>()
-                            .FirstOrDefault(menuItem => IsMenuItemForPageType(menuItem, e.SourcePageType));
+                            .FirstOrDefault(menuItem => this.IsMenuItemForPageType(menuItem, e.SourcePageType));
         }
 
         private bool IsMenuItemForPageType(WinUI.NavigationViewItem menuItem, Type sourcePageType)

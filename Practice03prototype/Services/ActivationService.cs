@@ -23,40 +23,40 @@ namespace Practice03prototype.Services
 
         public ActivationService(App app, Type defaultNavItem, Lazy<UIElement> shell = null)
         {
-            _app = app;
-            _shell = shell;
-            _defaultNavItem = defaultNavItem;
+            this._app = app;
+            this._shell = shell;
+            this._defaultNavItem = defaultNavItem;
         }
 
         public async Task ActivateAsync(object activationArgs)
         {
-            if (IsInteractive(activationArgs))
+            if (this.IsInteractive(activationArgs))
             {
                 // Initialize services that you need before app activation
                 // take into account that the splash screen is shown while this code runs.
-                await InitializeAsync();
+                await this.InitializeAsync();
 
                 // Do not repeat app initialization when the Window already has content,
                 // just ensure that the window is active
                 if (Window.Current.Content == null)
                 {
                     // Create a Shell or Frame to act as the navigation context
-                    Window.Current.Content = _shell?.Value ?? new Frame();
+                    Window.Current.Content = this._shell?.Value ?? new Frame();
                 }
             }
 
             // Depending on activationArgs one of ActivationHandlers or DefaultActivationHandler
             // will navigate to the first page
-            await HandleActivationAsync(activationArgs);
-            _lastActivationArgs = activationArgs;
+            await this.HandleActivationAsync(activationArgs);
+            this._lastActivationArgs = activationArgs;
 
-            if (IsInteractive(activationArgs))
+            if (this.IsInteractive(activationArgs))
             {
                 // Ensure the current window is active
                 Window.Current.Activate();
 
                 // Tasks after activation
-                await StartupAsync();
+                await this.StartupAsync();
             }
         }
 
@@ -67,7 +67,7 @@ namespace Practice03prototype.Services
 
         private async Task HandleActivationAsync(object activationArgs)
         {
-            var activationHandler = GetActivationHandlers()
+            var activationHandler = this.GetActivationHandlers()
                                                 .FirstOrDefault(h => h.CanHandle(activationArgs));
 
             if (activationHandler != null)
@@ -75,9 +75,9 @@ namespace Practice03prototype.Services
                 await activationHandler.HandleAsync(activationArgs);
             }
 
-            if (IsInteractive(activationArgs))
+            if (this.IsInteractive(activationArgs))
             {
-                var defaultHandler = new DefaultActivationHandler(_defaultNavItem);
+                var defaultHandler = new DefaultActivationHandler(this._defaultNavItem);
                 if (defaultHandler.CanHandle(activationArgs))
                 {
                     await defaultHandler.HandleAsync(activationArgs);

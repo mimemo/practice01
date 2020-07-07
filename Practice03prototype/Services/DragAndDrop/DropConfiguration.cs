@@ -47,117 +47,117 @@ namespace Practice03prototype.Services.DragAndDrop
 
         public ICommand DropBitmapCommand
         {
-            get { return (ICommand)GetValue(DropBitmapCommandProperty); }
-            set { SetValue(DropBitmapCommandProperty, value); }
+            get { return (ICommand)this.GetValue(DropBitmapCommandProperty); }
+            set { this.SetValue(DropBitmapCommandProperty, value); }
         }
 
         public ICommand DropHtmlCommand
         {
-            get { return (ICommand)GetValue(DropHtmlCommandProperty); }
-            set { SetValue(DropHtmlCommandProperty, value); }
+            get { return (ICommand)this.GetValue(DropHtmlCommandProperty); }
+            set { this.SetValue(DropHtmlCommandProperty, value); }
         }
 
         public ICommand DropRtfCommand
         {
-            get { return (ICommand)GetValue(DropRtfCommandProperty); }
-            set { SetValue(DropRtfCommandProperty, value); }
+            get { return (ICommand)this.GetValue(DropRtfCommandProperty); }
+            set { this.SetValue(DropRtfCommandProperty, value); }
         }
 
         public ICommand DropStorageItemsCommand
         {
-            get { return (ICommand)GetValue(DropStorageItemsCommandProperty); }
-            set { SetValue(DropStorageItemsCommandProperty, value); }
+            get { return (ICommand)this.GetValue(DropStorageItemsCommandProperty); }
+            set { this.SetValue(DropStorageItemsCommandProperty, value); }
         }
 
         public ICommand DropTextCommand
         {
-            get { return (ICommand)GetValue(DropTextCommandProperty); }
-            set { SetValue(DropTextCommandProperty, value); }
+            get { return (ICommand)this.GetValue(DropTextCommandProperty); }
+            set { this.SetValue(DropTextCommandProperty, value); }
         }
 
         public ICommand DropApplicationLinkCommand
         {
-            get { return (ICommand)GetValue(DropApplicationLinkCommandProperty); }
-            set { SetValue(DropApplicationLinkCommandProperty, value); }
+            get { return (ICommand)this.GetValue(DropApplicationLinkCommandProperty); }
+            set { this.SetValue(DropApplicationLinkCommandProperty, value); }
         }
 
         public ICommand DropWebLinkCommand
         {
-            get { return (ICommand)GetValue(DropWebLinkCommandProperty); }
-            set { SetValue(DropWebLinkCommandProperty, value); }
+            get { return (ICommand)this.GetValue(DropWebLinkCommandProperty); }
+            set { this.SetValue(DropWebLinkCommandProperty, value); }
         }
 
         public ICommand DropDataViewCommand
         {
-            get { return (ICommand)GetValue(DropDataViewCommandProperty); }
-            set { SetValue(DropDataViewCommandProperty, value); }
+            get { return (ICommand)this.GetValue(DropDataViewCommandProperty); }
+            set { this.SetValue(DropDataViewCommandProperty, value); }
         }
 
         public ICommand DragEnterCommand
         {
-            get { return (ICommand)GetValue(DragEnterCommandProperty); }
-            set { SetValue(DragEnterCommandProperty, value); }
+            get { return (ICommand)this.GetValue(DragEnterCommandProperty); }
+            set { this.SetValue(DragEnterCommandProperty, value); }
         }
 
         public ICommand DragOverCommand
         {
-            get { return (ICommand)GetValue(DragOverCommandProperty); }
-            set { SetValue(DragOverCommandProperty, value); }
+            get { return (ICommand)this.GetValue(DragOverCommandProperty); }
+            set { this.SetValue(DragOverCommandProperty, value); }
         }
 
         public ICommand DragLeaveCommand
         {
-            get { return (ICommand)GetValue(DragLeaveCommandProperty); }
-            set { SetValue(DragLeaveCommandProperty, value); }
+            get { return (ICommand)this.GetValue(DragLeaveCommandProperty); }
+            set { this.SetValue(DragLeaveCommandProperty, value); }
         }
 
         public async Task ProcessComandsAsync(DataPackageView dataview)
         {
-            if (DropDataViewCommand != null)
+            if (this.DropDataViewCommand != null)
             {
-                DropDataViewCommand.Execute(dataview);
+                this.DropDataViewCommand.Execute(dataview);
             }
 
-            if (dataview.Contains(StandardDataFormats.ApplicationLink) && DropApplicationLinkCommand != null)
+            if (dataview.Contains(StandardDataFormats.ApplicationLink) && this.DropApplicationLinkCommand != null)
             {
                 Uri uri = await dataview.GetApplicationLinkAsync();
-                DropApplicationLinkCommand.Execute(uri);
+                this.DropApplicationLinkCommand.Execute(uri);
             }
 
-            if (dataview.Contains(StandardDataFormats.Bitmap) && DropBitmapCommand != null)
+            if (dataview.Contains(StandardDataFormats.Bitmap) && this.DropBitmapCommand != null)
             {
                 RandomAccessStreamReference stream = await dataview.GetBitmapAsync();
-                DropBitmapCommand.Execute(stream);
+                this.DropBitmapCommand.Execute(stream);
             }
 
-            if (dataview.Contains(StandardDataFormats.Html) && DropHtmlCommand != null)
+            if (dataview.Contains(StandardDataFormats.Html) && this.DropHtmlCommand != null)
             {
                 string html = await dataview.GetHtmlFormatAsync();
-                DropHtmlCommand.Execute(html);
+                this.DropHtmlCommand.Execute(html);
             }
 
-            if (dataview.Contains(StandardDataFormats.Rtf) && DropRtfCommand != null)
+            if (dataview.Contains(StandardDataFormats.Rtf) && this.DropRtfCommand != null)
             {
                 string rtf = await dataview.GetRtfAsync();
-                DropRtfCommand.Execute(rtf);
+                this.DropRtfCommand.Execute(rtf);
             }
 
-            if (dataview.Contains(StandardDataFormats.StorageItems) && DropStorageItemsCommand != null)
+            if (dataview.Contains(StandardDataFormats.StorageItems) && this.DropStorageItemsCommand != null)
             {
                 IReadOnlyList<IStorageItem> storageItems = await dataview.GetStorageItemsAsync();
-                DropStorageItemsCommand.Execute(storageItems);
+                this.DropStorageItemsCommand.Execute(storageItems);
             }
 
-            if (dataview.Contains(StandardDataFormats.Text) && DropTextCommand != null)
+            if (dataview.Contains(StandardDataFormats.Text) && this.DropTextCommand != null)
             {
                 string text = await dataview.GetTextAsync();
-                DropTextCommand.Execute(text);
+                this.DropTextCommand.Execute(text);
             }
 
-            if (dataview.Contains(StandardDataFormats.WebLink) && DropWebLinkCommand != null)
+            if (dataview.Contains(StandardDataFormats.WebLink) && this.DropWebLinkCommand != null)
             {
                 Uri uri = await dataview.GetWebLinkAsync();
-                DropWebLinkCommand.Execute(uri);
+                this.DropWebLinkCommand.Execute(uri);
             }
         }
     }

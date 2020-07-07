@@ -14,12 +14,12 @@ namespace Practice03prototype.Views
 
         public SettingsPage()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
 
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
-            await ViewModel.InitializeAsync();
+            await this.ViewModel.InitializeAsync();
         }
     }
 }

@@ -13,7 +13,7 @@ namespace Practice03prototype.Activation
 
         public DefaultActivationHandler(Type navElement)
         {
-            _navElement = navElement;
+            this._navElement = navElement;
         }
 
         protected override async Task HandleInternalAsync(IActivatedEventArgs args)
@@ -26,14 +26,14 @@ namespace Practice03prototype.Activation
                 arguments = launchArgs.Arguments;
             }
 
-            NavigationService.Navigate(_navElement, arguments);
+            NavigationService.Navigate(this._navElement, arguments);
             await Task.CompletedTask;
         }
 
         protected override bool CanHandleInternal(IActivatedEventArgs args)
         {
             // None of the ActivationHandlers has handled the app activation
-            return NavigationService.Frame.Content == null && _navElement != null;
+            return NavigationService.Frame.Content == null && this._navElement != null;
         }
     }
 }

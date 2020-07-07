@@ -7,7 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Style="{StaticResource PageStyle}"
     mc:Ignorable="d">
-    <Grid x:Name="ContentArea" Margin="{StaticResource MediumLeftRightMargin}">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
             <RowDefinition Height="1*" />
@@ -19,12 +19,15 @@
                 <TextBlock Margin="12,14" Text="Now playing..." />
             </CommandBar.Content>
 
-            <AppBarToggleButton Icon="Shuffle" Label="Shuffle" />
-            <AppBarToggleButton Icon="RepeatAll" Label="Repeat" />
+            <AppBarToggleButton
+                Icon="ContactInfo"
+                IsChecked="{x:Bind Path=Vm.IsOpenBibliographyPanel.Value, Mode=TwoWay}"
+                Label="書誌" />
+            <AppBarToggleButton
+                Icon="Setting"
+                IsChecked="{x:Bind Path=Vm.IsOpenPreferencePanel.Value, Mode=TwoWay}"
+                Label="EPUB設定" />
             <AppBarSeparator />
-            <AppBarButton Icon="Back" Label="Back" />
-            <AppBarButton Icon="Stop" Label="Stop" />
-            <AppBarButton Icon="Play" Label="Play" />
             <AppBarButton Icon="Forward" Label="Forward" />
 
             <CommandBar.SecondaryCommands>
@@ -32,45 +35,67 @@
                 <AppBarButton Label="Dislike" />
             </CommandBar.SecondaryCommands>
 
-
-
-
         </CommandBar>
         <Grid Grid.Row="1" Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*" />
-                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="1*" MinWidth="100" />
+                <ColumnDefinition Width="2*" MinWidth="200" />
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="auto" />
                 <ColumnDefinition Width="auto" />
             </Grid.ColumnDefinitions>
 
             <Grid Background="AliceBlue" />
             <Grid Grid.Column="1" Background="LightCyan" />
 
-            <controls:BladeView Grid.Column="2">
-                <controls:BladeItem
-                    Width="300"
-                    Header="hoge"
-                    IsOpen="True">
 
-                    <!--  BladeItem content  -->
-                    <controls:BladeItem.Content>
-                        <Rectangle Width="600" Fill="Green" />
+            <controls:BladeItem
+                Grid.Column="2"
+                Header="書誌"
+                IsOpen="{x:Bind Path=Vm.IsOpenBibliographyPanel.Value, Mode=TwoWay}">
 
-                    </controls:BladeItem.Content>
+                <!--  BladeItem content  -->
+                <controls:BladeItem.Content>
+                    <Rectangle Width="600" Fill="AliceBlue" />
 
-                    <controls:BladeItem.ContentOverlay>
-                        <Rectangle Fill="Red" />
-                    </controls:BladeItem.ContentOverlay>
-                </controls:BladeItem>
+                </controls:BladeItem.Content>
 
-                <controls:BladeItem
-                    x:Name="DefaultBlade2"
-                    Width="300"
-                    Header="A blade"
-                    IsOpen="True">
-                    <!--  BladeItem content  -->
-                </controls:BladeItem>
-            </controls:BladeView>
+                <controls:BladeItem.ContentOverlay>
+                    <Rectangle Fill="Red" />
+                </controls:BladeItem.ContentOverlay>
+            </controls:BladeItem>
+
+            <controls:BladeItem
+                Grid.Column="3"
+                Header="EPUB設定"
+                IsOpen="{x:Bind Path=Vm.IsOpenPreferencePanel.Value, Mode=TwoWay}">
+                <!--  BladeItem content  -->
+            </controls:BladeItem>
+
+
+            <controls:Expander
+                x:Name="Expander1"
+                Grid.Column="4"
+                Margin="0,0,0,10"
+                VerticalAlignment="Stretch"
+                HorizontalContentAlignment="Stretch"
+                VerticalContentAlignment="Stretch"
+                ExpandDirection="Left"
+                Header="This is the header - expander 1"
+                IsExpanded="False">
+                <Grid>
+                    <TextBlock
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Text="This is the expanded content"
+                        TextWrapping="Wrap" />
+                </Grid>
+
+                <controls:Expander.ContentOverlay>
+                    <Grid Height="120" />
+                </controls:Expander.ContentOverlay>
+            </controls:Expander>
+
         </Grid>
     </Grid>
 </Page>

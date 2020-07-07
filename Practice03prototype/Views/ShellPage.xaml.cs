@@ -13,9 +13,9 @@ namespace Practice03prototype.Views
 
         public ShellPage()
         {
-            InitializeComponent();
-            DataContext = ViewModel;
-            ViewModel.Initialize(shellFrame, navigationView, KeyboardAccelerators);
+            this.InitializeComponent();
+            this.DataContext = this.ViewModel;
+            this.ViewModel.Initialize(this.shellFrame, this.navigationView, this.KeyboardAccelerators);
         }
     }
 }

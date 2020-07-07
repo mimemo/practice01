@@ -17,18 +17,18 @@ namespace Practice03prototype.ViewModels
 
         public ElementTheme ElementTheme
         {
-            get { return _elementTheme; }
+            get { return this._elementTheme; }
 
-            set { Set(ref _elementTheme, value); }
+            set { this.Set(ref this._elementTheme, value); }
         }
 
         private string _versionDescription;
 
         public string VersionDescription
         {
-            get { return _versionDescription; }
+            get { return this._versionDescription; }
 
-            set { Set(ref _versionDescription, value); }
+            set { this.Set(ref this._versionDescription, value); }
         }
 
         private ICommand _switchThemeCommand;
@@ -37,17 +37,17 @@ namespace Practice03prototype.ViewModels
         {
             get
             {
-                if (_switchThemeCommand == null)
+                if (this._switchThemeCommand == null)
                 {
-                    _switchThemeCommand = new RelayCommand<ElementTheme>(
+                    this._switchThemeCommand = new RelayCommand<ElementTheme>(
                         async (param) =>
                         {
-                            ElementTheme = param;
+                            this.ElementTheme = param;
                             await ThemeSelectorService.SetThemeAsync(param);
                         });
                 }
 
-                return _switchThemeCommand;
+                return this._switchThemeCommand;
             }
         }
 
@@ -59,9 +59,9 @@ namespace Practice03prototype.ViewModels
         {
             get
             {
-                if (_launchFeedbackHubCommand == null)
+                if (this._launchFeedbackHubCommand == null)
                 {
-                    _launchFeedbackHubCommand = new RelayCommand(
+                    this._launchFeedbackHubCommand = new RelayCommand(
                         async () =>
                         {
                             // This launcher is part of the Store Services SDK https://docs.microsoft.com/windows/uwp/monetize/microsoft-store-services-sdk
@@ -70,7 +70,7 @@ namespace Practice03prototype.ViewModels
                         });
                 }
 
-                return _launchFeedbackHubCommand;
+                return this._launchFeedbackHubCommand;
             }
         }
 
@@ -80,7 +80,7 @@ namespace Practice03prototype.ViewModels
 
         public async Task InitializeAsync()
         {
-            VersionDescription = GetVersionDescription();
+            this.VersionDescription = this.GetVersionDescription();
             await Task.CompletedTask;
         }
 

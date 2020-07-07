@@ -8,11 +8,14 @@ namespace Practice03prototype.Views
 {
     public sealed partial class MainPage : Page
     {
-        public MainViewModel ViewModel { get; } = new MainViewModel();
+        public MainViewModel Vm { get; } = new MainViewModel();
 
         public MainPage()
         {
-            InitializeComponent();
+
+            this.InitializeComponent();
         }
+
+
     }
 }
