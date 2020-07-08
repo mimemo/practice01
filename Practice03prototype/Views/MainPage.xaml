@@ -7,6 +7,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    xmlns:views="using:Practice03prototype.Views"
     Style="{StaticResource PageStyle}"
     mc:Ignorable="d">
     <Grid>
@@ -47,33 +48,58 @@
                 <ColumnDefinition Width="auto" />
             </Grid.ColumnDefinitions>
 
+            <Grid.Resources />
+
             <Grid Background="AliceBlue" />
 
             <muxc:ItemsRepeaterScrollHost Grid.Column="1">
+
+                <muxc:ItemsRepeaterScrollHost.Resources>
+                    <views:MyDataTemplateSelector
+                        x:Key="MyDataTemplateSelector"
+                        Accent="{StaticResource AccentItemTemplate}"
+                        Normal="{StaticResource NormalItemTemplate}" />
+
+
+                    <DataTemplate x:Key="NormalItemTemplate" x:DataType="x:Int32">
+                        <Button
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch"
+                            Background="{ThemeResource SystemChromeLowColor}">
+                            <TextBlock Text="{x:Bind}" />
+                        </Button>
+                    </DataTemplate>
+
+                    <DataTemplate x:Key="AccentItemTemplate" x:DataType="x:Int32">
+                        <Button
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Bottom"
+                            Background="{ThemeResource SystemAccentColor}">
+                            <TextBlock Text="{x:Bind}" />
+                        </Button>
+                    </DataTemplate>
+
+                </muxc:ItemsRepeaterScrollHost.Resources>
+
+
                 <ScrollViewer x:Name="scrollViewer" IsVerticalScrollChainingEnabled="False">
 
-                    <muxc:ItemsRepeater x:Name="repeater2" HorizontalAlignment="Stretch">
+                    <muxc:ItemsRepeater
+                        x:Name="repeater2"
+                        HorizontalAlignment="Stretch"
+                        ItemTemplate="{StaticResource MyDataTemplateSelector}"
+                        SizeChanged="repeater2_SizeChanged">
+
+                        <!--<muxc:ItemsRepeater.Layout>
+                            <common:ActivityFeedLayout
+                                ColumnSpacing="5"
+                                MinItemSize="80, 108"
+                                RowSpacing="12" />
+                        </muxc:ItemsRepeater.Layout>-->
 
                         <muxc:ItemsRepeater.Layout>
-                            <common:ActivityFeedLayout />
+                            <muxc:UniformGridLayout x:Name="unilayout" MinItemWidth="150" />
                         </muxc:ItemsRepeater.Layout>
-
-
-                        <muxc:ItemsRepeater.ItemTemplate>
-
-
-
-                            <DataTemplate x:DataType="x:Int32">
-                                <Button
-                                    HorizontalAlignment="Stretch"
-                                    VerticalAlignment="Stretch"
-                                    Background="{ThemeResource SystemChromeLowColor}">
-                                    <TextBlock Text="{x:Bind}" />
-                                </Button>
-                            </DataTemplate>
-
-
-                        </muxc:ItemsRepeater.ItemTemplate>
 
                     </muxc:ItemsRepeater>
                 </ScrollViewer>
@@ -85,6 +111,7 @@
             <controls:BladeItem
                 Grid.Column="2"
                 Header="書誌"
+                IsExpanded="False"
                 IsOpen="{x:Bind Path=Vm.IsOpenBibliographyPanel.Value, Mode=TwoWay}">
 
                 <!--  BladeItem content  -->
@@ -101,6 +128,7 @@
             <controls:BladeItem
                 Grid.Column="3"
                 Header="EPUB設定"
+                IsExpanded="False"
                 IsOpen="{x:Bind Path=Vm.IsOpenPreferencePanel.Value, Mode=TwoWay}">
                 <!--  BladeItem content  -->
             </controls:BladeItem>

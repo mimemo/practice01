@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Microsoft.UI.Xaml.Controls;
 using Practice03prototype.ViewModels;
 
 using Windows.UI.Xaml.Controls;
@@ -18,6 +19,21 @@ namespace Practice03prototype.Views
             this.repeater2.ItemsSource = Enumerable.Range(0, 500);
         }
 
+        private void repeater2_SizeChanged(object sender, Windows.UI.Xaml.SizeChangedEventArgs e)
+        {
+            var iRepeater = sender as ItemsRepeater;
+            if(iRepeater == null)
+            {
+                return;
+            }
 
+            var col = (int)(iRepeater.ActualWidth / 300) * 2;
+
+
+            this.unilayout.MaximumRowsOrColumns = col;
+
+
+
+        }
     }
 }

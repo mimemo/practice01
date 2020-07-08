@@ -16,6 +16,8 @@ namespace Practice03prototype.Views
             this.InitializeComponent();
             this.DataContext = this.ViewModel;
             this.ViewModel.Initialize(this.shellFrame, this.navigationView, this.KeyboardAccelerators);
+
+            this.navigationView.IsPaneOpen = false;
         }
     }
 }

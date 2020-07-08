@@ -4,6 +4,7 @@
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Diagnostics;
+using System.Linq;
 using Windows.Foundation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -18,11 +19,11 @@ namespace Practice03prototype.Common
         public double Width { get; set; } = 150;
         protected override void OnItemsChangedCore(VirtualizingLayoutContext context, object source, NotifyCollectionChangedEventArgs args)
         {
-            // The data collection has changed, so the bounds of all the indices are not valid anymore. 
-            // We need to re-evaluate all the bounds and cache them during the next measure.
+            // データ収集が変更されたため、すべてのインデックスの境界が無効になりました。
+            // すべての境界を再評価し、次のメジャーでキャッシュする必要があります。.
             this.m_cachedBounds.Clear();
             this.m_firstIndex = this.m_lastIndex = 0;
-            this.cachedBoundsInvalid = true;
+            this.cachedBoundsInvalid = false;
             this.InvalidateMeasure();
         }
 
@@ -30,14 +31,21 @@ namespace Practice03prototype.Common
         {
             var viewport = context.RealizationRect;
 
+            Debug.WriteLine($"availableSize X,Y：{availableSize.Width}, {availableSize.Height}");
+
             if(availableSize.Width != this.m_lastAvailableWidth || this.cachedBoundsInvalid)
             {
                 this.UpdateCachedBounds(availableSize);
                 this.m_lastAvailableWidth = availableSize.Width;
             }
 
-            // Initialize column offsets
-            int numColumns = (int)(availableSize.Width / this.Width);
+            // 列オフセットの初期化
+            int numColumns = (int)(availableSize.Width / 150);
+            Debug.WriteLine($"列数-150：{numColumns}");
+
+
+
+
             if(this.m_columnOffsets.Count == 0)
             {
                 for(int i = 0; i < numColumns; i++)
@@ -46,11 +54,40 @@ namespace Practice03prototype.Common
                 }
             }
 
+            if(numColumns % 2 == 0)
+            {
+                this.Width = 150;
+                Debug.WriteLine($"this.Width-0：{this.Width}");
+            }
+            else
+            {
+
+
+                if(numColumns < 2)
+                {
+
+                }
+                else
+                {
+                    this.Width = 230;
+                    numColumns = (int)(availableSize.Width / 201);
+                    Debug.WriteLine($"this.Width-1：{this.Width}");
+                    //                    this.Width = (int)(availableSize.Width / (numColumns - 1));
+                    // numColumns = numColumns - 1;
+
+
+                }
+                //              return this.GetExtentSize(availableSize);
+            }
+
+
+            Debug.WriteLine($"列数：{numColumns}");
+
             this.m_firstIndex = this.GetStartIndex(viewport);
             int currentIndex = this.m_firstIndex;
             double nextOffset = -1.0;
 
-            // Measure items from start index to when we hit the end of the viewport.
+            // 開始インデックスからビューポートの終わりまでの項目を計測します。
             while(currentIndex < context.ItemCount && nextOffset < viewport.Bottom)
             {
                 var child = context.GetOrCreateElementAt(currentIndex);
@@ -58,7 +95,7 @@ namespace Practice03prototype.Common
 
                 if(currentIndex >= this.m_cachedBounds.Count)
                 {
-                    // We do not have bounds for this index. Lay it out and cache it.
+                    // このインデックスには境界線がありません。レイアウトしてキャッシュします。
                     int columnIndex = this.GetIndexOfLowestColumn(this.m_columnOffsets, out nextOffset);
                     this.m_cachedBounds.Add(new Rect(columnIndex * this.Width, nextOffset, this.Width, child.DesiredSize.Height));
                     this.m_columnOffsets[columnIndex] += child.DesiredSize.Height;
@@ -80,7 +117,13 @@ namespace Practice03prototype.Common
                 currentIndex++;
             }
 
+
+
+
             var extent = this.GetExtentSize(availableSize);
+
+            Debug.WriteLine($"extent,Y：{extent.Width}, {extent.Height}");
+
             return extent;
         }
 
@@ -99,6 +142,8 @@ namespace Practice03prototype.Common
 
         private void UpdateCachedBounds(Size availableSize)
         {
+
+
             int numColumns = (int)(availableSize.Width / this.Width);
             this.m_columnOffsets.Clear();
             for(int i = 0; i < numColumns; i++)
@@ -126,9 +171,7 @@ namespace Practice03prototype.Common
             }
             else
             {
-                // find first index that intersects the viewport
-                // perhaps this can be done more efficiently than walking
-                // from the start of the list.
+                // ビューポートと交差する最初のインデックスを見つけます。
                 for(int i = 0; i < this.m_cachedBounds.Count; i++)
                 {
                     var currentBounds = this.m_cachedBounds[i];
@@ -172,6 +215,8 @@ namespace Practice03prototype.Common
                     largestColumnOffset = currentOffset;
                 }
             }
+
+
 
             return new Size(availableSize.Width, largestColumnOffset);
         }
