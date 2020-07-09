@@ -17,7 +17,13 @@ namespace Practice03prototype.Views
 
         protected override DataTemplate SelectTemplateCore(object item)
         {
-            if((int)item % 2 == 0)
+
+            if( item is Practice03prototype.ViewModels.Epage iPage)
+            {
+
+            
+
+            if(iPage.Index % 2 == 0)
             {
                 return this.Normal;
             }
@@ -25,6 +31,9 @@ namespace Practice03prototype.Views
             {
                 return this.Accent;
             }
+            }
+
+            return this.Normal;
         }
     }
 }

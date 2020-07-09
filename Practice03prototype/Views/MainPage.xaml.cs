@@ -16,7 +16,6 @@ namespace Practice03prototype.Views
 
             this.InitializeComponent();
 
-            this.repeater2.ItemsSource = Enumerable.Range(0, 500);
         }
 
         private void repeater2_SizeChanged(object sender, Windows.UI.Xaml.SizeChangedEventArgs e)

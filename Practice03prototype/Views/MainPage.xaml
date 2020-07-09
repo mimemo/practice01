@@ -7,6 +7,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    xmlns:viewmodels="using:Practice03prototype.ViewModels"
     xmlns:views="using:Practice03prototype.Views"
     Style="{StaticResource PageStyle}"
     mc:Ignorable="d">
@@ -41,7 +42,7 @@
         </CommandBar>
         <Grid Grid.Row="1" Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*" MinWidth="100" />
+                <ColumnDefinition Width="150" />
                 <ColumnDefinition Width="2*" MinWidth="200" />
                 <ColumnDefinition Width="auto" />
                 <ColumnDefinition Width="auto" />
@@ -60,24 +61,35 @@
                         Accent="{StaticResource AccentItemTemplate}"
                         Normal="{StaticResource NormalItemTemplate}" />
 
+                    <DataTemplate x:Key="NormalItemTemplate" x:DataType="viewmodels:Epage">
 
-                    <DataTemplate x:Key="NormalItemTemplate" x:DataType="x:Int32">
-                        <Button
-                            HorizontalAlignment="Stretch"
-                            VerticalAlignment="Stretch"
-                            Background="{ThemeResource SystemChromeLowColor}">
-                            <TextBlock Text="{x:Bind}" />
-                        </Button>
+                        <Grid Background="{ThemeResource SystemAccentColor}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="2*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="{x:Bind Path=Index}" />
+                            <Image Grid.Column="1" Source="/Assets/StoreLogo.png" />
+
+                        </Grid>
                     </DataTemplate>
 
-                    <DataTemplate x:Key="AccentItemTemplate" x:DataType="x:Int32">
-                        <Button
-                            HorizontalAlignment="Stretch"
-                            VerticalAlignment="Bottom"
-                            Background="{ThemeResource SystemAccentColor}">
-                            <TextBlock Text="{x:Bind}" />
-                        </Button>
+                    <DataTemplate x:Key="AccentItemTemplate" x:DataType="viewmodels:Epage">
+
+
+                        <Grid Background="{ThemeResource ApplicationSecondaryForegroundThemeBrush}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition Width="1*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="1" Text="{x:Bind Path=Index}" />
+                            <Image Source="/Assets/StoreLogo.png" />
+
+                        </Grid>
+
                     </DataTemplate>
+
+
 
                 </muxc:ItemsRepeaterScrollHost.Resources>
 
@@ -88,6 +100,7 @@
                         x:Name="repeater2"
                         HorizontalAlignment="Stretch"
                         ItemTemplate="{StaticResource MyDataTemplateSelector}"
+                        ItemsSource="{x:Bind Path=Vm.Pages}"
                         SizeChanged="repeater2_SizeChanged">
 
                         <!--<muxc:ItemsRepeater.Layout>
@@ -98,7 +111,11 @@
                         </muxc:ItemsRepeater.Layout>-->
 
                         <muxc:ItemsRepeater.Layout>
-                            <muxc:UniformGridLayout x:Name="unilayout" MinItemWidth="150" />
+                            <muxc:UniformGridLayout
+                                x:Name="unilayout"
+                                MinItemHeight="150"
+                                MinItemWidth="150"
+                                MinRowSpacing="10" />
                         </muxc:ItemsRepeater.Layout>
 
                     </muxc:ItemsRepeater>
